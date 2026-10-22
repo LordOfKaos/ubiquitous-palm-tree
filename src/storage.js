@@ -1,3 +1,9 @@
+export const KEYS = {
+  star: 'employability-star',
+  jobs: 'employability-jobs',
+  home: 'employability-home',
+};
+
 // Saved on this device only, so a returning participant picks up where they left off.
 export function loadSaved(key) {
   try {

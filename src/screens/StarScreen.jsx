@@ -1,26 +1,25 @@
 import { useEffect, useState } from 'react';
 import { QUESTIONS } from '../questions.js';
-import { loadSaved, save } from '../storage.js';
+import { KEYS, loadSaved, save } from '../storage.js';
 import Question from '../components/Question.jsx';
 import SpiderChart from '../components/SpiderChart.jsx';
 import Summary from '../components/Summary.jsx';
 import Progress from '../components/Progress.jsx';
 
-const STORAGE_KEY = 'employability-star';
 const today = new Date().toISOString().slice(0, 10);
-const saved = loadSaved(STORAGE_KEY);
-const initialScores = Object.fromEntries(
-  QUESTIONS.map((q) => [q.id, saved.scores?.[q.id] ?? 5])
-);
 
 export default function StarScreen() {
+  // Read saved data each time the screen opens, so switching tabs never shows stale scores.
+  const [saved] = useState(() => loadSaved(KEYS.star));
   const [name, setName] = useState(saved.name ?? '');
   const [date, setDate] = useState(today);
-  const [scores, setScores] = useState(initialScores);
+  const [scores, setScores] = useState(() =>
+    Object.fromEntries(QUESTIONS.map((q) => [q.id, saved.scores?.[q.id] ?? 5]))
+  );
   const [baseline, setBaseline] = useState(saved.baseline ?? null);
 
   useEffect(() => {
-    save(STORAGE_KEY, { name, scores, baseline });
+    save(KEYS.star, { name, scores, baseline });
   }, [name, scores, baseline]);
 
   function setScore(id, value) {
