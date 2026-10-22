@@ -1,0 +1,105 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.app {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --accent: #087ea4;
+  --border: #e5e7eb;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.app.dark {
+  --bg: #111827;
+  --card: #1f2937;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --accent: #58c4dc;
+  --border: #374151;
+}
+
+header, footer { text-align: center; }
+header h1 { margin: 0 0 0.5rem; font-size: 2.5rem; }
+header p { color: var(--muted); }
+footer { margin-top: 2rem; color: var(--muted); font-size: 0.9rem; }
+
+.grid {
+  max-width: 960px;
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.card h2 { margin: 0; font-size: 1.2rem; }
+.concept { color: var(--accent); font-size: 0.85rem; }
+.demo-body { margin-top: 1rem; }
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+button:hover { opacity: 0.85; }
+button.link { background: none; color: var(--muted); padding: 0.25rem; }
+
+input[type='text'], input:not([type]) {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.row { display: flex; gap: 0.5rem; }
+
+.counter { text-align: center; }
+.counter .row { justify-content: center; }
+.count { display: block; font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+.todos { list-style: none; padding: 0; margin: 0.75rem 0; }
+.todos li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.todos li.done label { text-decoration: line-through; color: var(--muted); }
+.todos label { display: flex; gap: 0.5rem; align-items: center; }
+
+.clock { display: flex; align-items: center; justify-content: space-between; }
+.time { font-size: 2rem; font-variant-numeric: tabular-nums; }
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+.profile > div { flex: 1; }
+.avatar { font-size: 2rem; }
+.muted { color: var(--muted); font-size: 0.85rem; }
