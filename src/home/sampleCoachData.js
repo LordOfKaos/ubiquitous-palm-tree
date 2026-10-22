@@ -47,7 +47,7 @@ export const SAMPLE_MEETINGS = [
     title: 'Progress review with Jordan',
     format: 'In person',
     location: 'Employment Hub, 12 Market Street',
-    notes: 'Bring your updated CV and any jobs you’ve saved.',
+    notes: 'Bring your updated CV (curriculum vitae) and any jobs you’ve saved.',
   },
   {
     id: 'mtg-mock-interview',

@@ -38,19 +38,27 @@ export default function StarScreen() {
   return (
     <>
       <header>
-        <h1>My Employability Star</h1>
+        <h1 tabIndex={-1}>My Employability Star</h1>
         <p>Score yourself from 1 (not at all) to 10 (completely) on each question.</p>
         <div className="row center no-print">
-          <button onClick={() => window.print()}>🖨️ Print / save PDF</button>
+          <button onClick={() => window.print()}>
+            <span aria-hidden="true">🖨️</span> Print or save a copy
+          </button>
         </div>
       </header>
 
-      <main className="layout">
-        <section className="card">
+      <main id="main" tabIndex={-1} className="layout">
+        <section className="card" aria-labelledby="score-heading">
+          <h2 id="score-heading">Score yourself</h2>
           <div className="participant">
             <label>
               Participant name
-              <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                autoComplete="name"
+              />
             </label>
             <label>
               Date
@@ -84,7 +92,7 @@ export default function StarScreen() {
 
           <div className="row center wrap no-print">
             <button onClick={saveBaseline}>
-              {baseline ? 'Update starting point' : '📌 Save as starting point'}
+              {baseline ? 'Update starting point' : 'Save as starting point'}
             </button>
             {baseline && (
               <button className="secondary" onClick={clearBaseline}>

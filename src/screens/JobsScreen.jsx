@@ -59,16 +59,25 @@ export default function JobsScreen() {
   return (
     <>
       <header>
-        <h1>Jobs Near You</h1>
+        <h1 tabIndex={-1}>Jobs Near You</h1>
         <p>Browse vacancies in your area and save the ones you’d like to talk about with your adviser.</p>
       </header>
 
-      <main className="jobs">
+      <main id="main" tabIndex={-1} className="jobs">
         <form className="card area-search" onSubmit={searchArea}>
+          <h2 className="sr-only">Where to look</h2>
           <label>
             Town or postcode
-            <input value={areaInput} onChange={(e) => setAreaInput(e.target.value)} placeholder={DEFAULT_AREA} />
+            <input
+              value={areaInput}
+              onChange={(e) => setAreaInput(e.target.value)}
+              placeholder={DEFAULT_AREA}
+              aria-describedby="area-hint"
+            />
           </label>
+          <span id="area-hint" className="hint-text">
+            For example, a town name or a postcode like LS1 4AP
+          </span>
           <label>
             Distance
             <select value={radius} onChange={(e) => setRadius(Number(e.target.value))}>
@@ -87,6 +96,7 @@ export default function JobsScreen() {
           real vacancies.
         </div>
 
+        <h2 className="sr-only">Filter jobs</h2>
         <div className="filters">
           <input
             className="keyword"
@@ -127,6 +137,7 @@ export default function JobsScreen() {
             {shown.length === 0 && (
               <p className="status">No jobs match. Try a wider distance or fewer filters.</p>
             )}
+            <h2 className="sr-only">Jobs found</h2>
             <div className="job-list">
               {shown.map((job) => (
                 <JobCard

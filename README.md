@@ -56,6 +56,27 @@ employers, and the screen says so. All adverts come through `fetchJobs()` in
 `src/jobs/jobSource.js`; to show real vacancies, replace that function with a call to a
 job-search API that returns the same shape. The default area is set in `src/jobs/config.js`.
 
+## Branding
+
+The site follows the Serco brand guidelines as far as the brand values supplied so far allow:
+
+- **Colour:** Serco Dark Purple `#1D0743` (Pantone 2755C) and its official tints at 80%, 60%
+  and 20%, plus a 5% tint for the page background. Text uses only Dark Purple and the 80%
+  tint in light mode (white and the 20% tint in dark mode), so it keeps 7:1 contrast. The
+  lighter tints are used for borders and fills. The colours are defined once, as CSS custom
+  properties at the top of `src/styles.css`.
+- **Type:** Lora for main headings and Avenir Next LT Pro for everything else. Avenir Next is
+  a licensed font, so the self-hosted Nunito Sans stands in for it on devices that don't have
+  it installed. Both web fonts are bundled with the site (`@fontsource`), so no requests go to
+  Google.
+- **Not yet applied:** Serco Grey, Serco Red, Serco Rich Red and Serco Mid Grey (values not yet
+  supplied), the Impact gradient, and the Serco logo.
+
+## Accessibility
+
+The app targets WCAG 2.2 AAA. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for the audit results
+and what still needs testing by a person.
+
 ## Running locally
 
 ```bash

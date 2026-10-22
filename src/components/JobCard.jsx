@@ -13,22 +13,32 @@ export default function JobCard({ job, saved, onToggleSave }) {
     <article className="card job">
       <div className="job-head">
         <div>
-          <h2>{job.title}</h2>
+          <h3>{job.title}</h3>
           <div className="employer">{job.employer}</div>
         </div>
         <button
           className={saved ? 'save saved' : 'save'}
           onClick={onToggleSave}
           aria-pressed={saved}
+          aria-label={`${saved ? 'Saved' : 'Save'} job: ${job.title}`}
         >
-          {saved ? '★ Saved' : '☆ Save'}
+          <span aria-hidden="true">{saved ? '★' : '☆'}</span> {saved ? 'Saved' : 'Save'}
         </button>
       </div>
 
       <ul className="facts">
-        <li>📍 {job.location}</li>
-        <li>💷 {job.salary}</li>
-        <li>🕒 {job.hours}</li>
+        <li>
+          <span aria-hidden="true">📍</span> <span className="sr-only">Location: </span>
+          {job.location}
+        </li>
+        <li>
+          <span aria-hidden="true">💷</span> <span className="sr-only">Pay: </span>
+          {job.salary}
+        </li>
+        <li>
+          <span aria-hidden="true">🕒</span> <span className="sr-only">Hours: </span>
+          {job.hours}
+        </li>
       </ul>
 
       <div className="tags">
@@ -50,7 +60,12 @@ export default function JobCard({ job, saved, onToggleSave }) {
         </div>
       )}
 
-      <button className="secondary" onClick={() => setOpen(!open)} aria-expanded={open}>
+      <button
+        className="secondary"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={`${open ? 'Hide' : 'More'} details: ${job.title}`}
+      >
         {open ? 'Hide details' : 'More details'}
       </button>
     </article>

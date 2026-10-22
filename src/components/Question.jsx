@@ -7,7 +7,7 @@ export default function Question({ number, question, value, onChange }) {
     <div className="question">
       <label htmlFor={inputId}>
         <strong>
-          {number}. {question.label}
+          {number}. {question.fullLabel ?? question.label}
         </strong>
         <span className="muted">{question.text}</span>
       </label>
@@ -20,6 +20,7 @@ export default function Question({ number, question, value, onChange }) {
           step="1"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
+          aria-valuetext={`${value} out of ${MAX_SCORE}`}
         />
         <span className="score">{value}</span>
       </div>
