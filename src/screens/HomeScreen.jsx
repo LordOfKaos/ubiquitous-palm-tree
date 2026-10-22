@@ -40,14 +40,14 @@ export default function HomeScreen() {
   return (
     <>
       <header>
-        <h1>
+        <h1 tabIndex={-1}>
           {greeting()}
           {name ? `, ${name}` : ''} 👋
         </h1>
         <p>Here’s what’s coming up and what your coach has been in touch about.</p>
       </header>
 
-      <main className="home">
+      <main id="main" tabIndex={-1} className="home">
         <div className="notice">
           <strong>Sample data.</strong> The messages, meetings and actions below are examples to show how this
           page will work.
@@ -97,12 +97,21 @@ function NextMeeting({ meeting, coach }) {
         {days > 1 && <span className="muted"> · in {days} days</span>}
       </div>
       <ul className="facts">
-        <li>👤 {coach.name}</li>
-        <li>📍 {meeting.format}: {meeting.location}</li>
-        <li>📝 {meeting.notes}</li>
+        <li>
+          <span aria-hidden="true">👤</span> <span className="sr-only">With: </span>
+          {coach.name}
+        </li>
+        <li>
+          <span aria-hidden="true">📍</span> <span className="sr-only">Where: </span>
+          {meeting.format}: {meeting.location}
+        </li>
+        <li>
+          <span aria-hidden="true">📝</span> <span className="sr-only">Notes: </span>
+          {meeting.notes}
+        </li>
       </ul>
       <button className="secondary" onClick={() => downloadCalendarFile(meeting)}>
-        📅 Add to my calendar
+        <span aria-hidden="true">📅</span> Add to my calendar
       </button>
     </section>
   );
@@ -128,7 +137,7 @@ function Messages({ coach, messages, read, onRead, onReadAll }) {
         {messages.map((m) => {
           const isUnread = !read.includes(m.id);
           return (
-            <li key={m.id} className={isUnread ? 'message unread' : 'message'} onClick={() => onRead(m.id)}>
+            <li key={m.id} className={isUnread ? 'message unread' : 'message'}>
               <span className="message-icon" aria-hidden="true">
                 {MESSAGE_ICONS[m.type]}
               </span>
@@ -139,9 +148,14 @@ function Messages({ coach, messages, read, onRead, onReadAll }) {
                     {relativeDay(m.sentAt)}, {time(m.sentAt)}
                   </span>
                   {isUnread && <span className="new">New</span>}
+                  {isUnread && (
+                    <button className="link-button" onClick={() => onRead(m.id)}>
+                      Mark as read
+                    </button>
+                  )}
                   {m.link && (
-                    <a href={m.link.href} className="message-link">
-                      {m.link.label} →
+                    <a href={m.link.href} className="message-link" onClick={() => onRead(m.id)}>
+                      {m.link.label} <span aria-hidden="true">→</span>
                     </a>
                   )}
                 </div>
@@ -168,7 +182,15 @@ function Actions({ actions, state, onToggle }) {
           {done} of {actions.length} done
         </span>
       </div>
-      <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax={actions.length} aria-valuenow={done}>
+      <div
+        className="progress-bar"
+        role="progressbar"
+        aria-label="Actions completed"
+        aria-valuemin="0"
+        aria-valuemax={actions.length}
+        aria-valuenow={done}
+        aria-valuetext={`${done} of ${actions.length} done`}
+      >
         <div style={{ width: `${(done / actions.length) * 100}%` }} />
       </div>
       <ul className="actions">
@@ -183,7 +205,13 @@ function Actions({ actions, state, onToggle }) {
                 <span>{a.text}</span>
               </label>
               <span className={overdue ? 'due overdue' : 'due muted'}>
-                {complete ? 'Done' : overdue ? '⚠️ Overdue' : `Due ${Math.abs(days) <= 1 ? relativeDay(a.due).toLowerCase() : relativeDay(a.due)}`}
+                {complete ? 'Done' : overdue ? (
+                  <>
+                    <span aria-hidden="true">⚠️</span> Overdue
+                  </>
+                ) : (
+                  `Due ${Math.abs(days) <= 1 ? relativeDay(a.due).toLowerCase() : relativeDay(a.due)}`
+                )}
               </span>
             </li>
           );
@@ -230,19 +258,19 @@ function Snapshot({ star, savedJobs }) {
       <div className="tiles">
         <a className="tile" href="#star">
           <span className="muted">Employability Star</span>
-          <strong>{hasScores ? `${now.toFixed(1)} / 10` : 'Not started'}</strong>
+          <strong>{hasScores ? `${now.toFixed(1)} out of 10` : 'Not started'}</strong>
           <span className="muted">
             {change === null
               ? hasScores
                 ? 'Average score'
-                : 'Score yourself →'
-              : `${change >= 0 ? '▲ +' : '▼ '}${change.toFixed(1)} since your start`}
+                : 'Score yourself'
+              : `${change >= 0 ? 'Up' : 'Down'} ${Math.abs(change).toFixed(1)} since your start`}
           </span>
         </a>
         <a className="tile" href="#jobs">
           <span className="muted">Saved jobs</span>
           <strong>{savedJobs}</strong>
-          <span className="muted">{savedJobs ? 'View my shortlist →' : 'Find jobs →'}</span>
+          <span className="muted">{savedJobs ? 'View my shortlist' : 'Find jobs'}</span>
         </a>
       </div>
     </section>

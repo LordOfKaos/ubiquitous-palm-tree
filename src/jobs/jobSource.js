@@ -7,6 +7,6 @@ export async function fetchJobs({ area, radius }) {
   await new Promise((resolve) => setTimeout(resolve, 300));
   return SAMPLE_JOBS.filter((job) => job.distance <= radius).map((job) => ({
     ...job,
-    location: `${job.distance} miles from ${area}`,
+    location: `${job.distance} ${job.distance === 1 ? 'mile' : 'miles'} from ${area}`,
   }));
 }

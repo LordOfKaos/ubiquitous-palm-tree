@@ -56,6 +56,11 @@ employers, and the screen says so. All adverts come through `fetchJobs()` in
 `src/jobs/jobSource.js`; to show real vacancies, replace that function with a call to a
 job-search API that returns the same shape. The default area is set in `src/jobs/config.js`.
 
+## Accessibility
+
+The app targets WCAG 2.2 AAA. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for the audit results
+and what still needs testing by a person.
+
 ## Running locally
 
 ```bash

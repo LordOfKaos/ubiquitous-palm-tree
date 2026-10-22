@@ -13,6 +13,8 @@ export const QUESTIONS = [
   {
     id: 'applications',
     label: 'CV & Applications',
+    // Spelled out where it first appears on the page, so the abbreviation is explained.
+    fullLabel: 'CV (curriculum vitae) & Applications',
     text: 'How ready is your CV, and how confident are you filling in job applications?',
   },
   {

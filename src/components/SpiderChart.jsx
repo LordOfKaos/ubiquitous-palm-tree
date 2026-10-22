@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MAX_SCORE } from '../questions.js';
 
 const WIDTH = 520;
@@ -23,6 +23,14 @@ export default function SpiderChart({ questions, scores, baseline }) {
   const [active, setActive] = useState(null);
   const n = questions.length;
 
+  // Escape hides the score label, wherever focus or the pointer is.
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (e) => e.key === 'Escape' && setActive(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [active]);
+
   function describe(q) {
     return baseline
       ? `${q.label}: ${baseline[q.id]} → ${scores[q.id]}`
@@ -33,8 +41,8 @@ export default function SpiderChart({ questions, scores, baseline }) {
     <svg
       className="spider"
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-      role="img"
-      aria-label={questions.map(describe).join(', ')}
+      role="group"
+      aria-label={`Spider chart. ${questions.map(describe).join(', ')}`}
       onMouseLeave={() => setActive(null)}
     >
       {RINGS.map((ring) => (
@@ -84,10 +92,24 @@ export default function SpiderChart({ questions, scores, baseline }) {
         return (
           <g
             key={q.id}
+            className="point"
+            tabIndex={0}
+            role="button"
+            aria-label={describe(q)}
+            aria-pressed={active === i}
             onMouseEnter={() => setActive(i)}
+            onFocus={() => setActive(i)}
+            onBlur={() => setActive(null)}
             onClick={() => setActive(active === i ? null : i)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActive(active === i ? null : i);
+              }
+            }}
           >
-            <circle className="hit" cx={x} cy={y} r="16" />
+            {/* At least 44px across at full width, the minimum comfortable tap target. */}
+            <circle className="hit" cx={x} cy={y} r="26" />
             <circle className="dot" cx={x} cy={y} r={active === i ? 6 : 4.5} />
           </g>
         );

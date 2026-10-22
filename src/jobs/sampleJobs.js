@@ -40,7 +40,7 @@ export const SAMPLE_JOBS = [
     training: true,
     description:
       'Support residents with daily living, meals and activities. Flexible shifts to fit around childcare. Care Certificate training provided.',
-    requirements: ['Caring and patient', 'Enhanced DBS check (paid for by employer)'],
+    requirements: ['Caring and patient', 'Enhanced DBS (Disclosure and Barring Service) check, paid for by the employer'],
   },
   {
     id: 'kitchen-porter',
@@ -110,7 +110,7 @@ export const SAMPLE_JOBS = [
     training: true,
     description:
       'Deliver parcels on a set local route in a company van. Fuel and van provided; route training on your first week.',
-    requirements: ['Full UK driving licence for at least 1 year', 'Good local knowledge'],
+    requirements: ['Full driving licence, held for at least 1 year', 'Good local knowledge'],
   },
   {
     id: 'barista',
@@ -137,8 +137,8 @@ export const SAMPLE_JOBS = [
     noExperience: false,
     training: true,
     description:
-      'Patrol and monitor a retail park, including nights. The employer pays for your SIA licence training if you don’t already have one.',
-    requirements: ['Able to work nights', 'SIA licence, or willing to train'],
+      'Patrol and monitor a retail park, including nights. The employer pays for your SIA (Security Industry Authority) licence training if you don’t already have one.',
+    requirements: ['Able to work nights', 'SIA licence, or willing to train for one'],
   },
   {
     id: 'apprentice-electrician',
@@ -152,7 +152,7 @@ export const SAMPLE_JOBS = [
     training: true,
     description:
       'Four-year apprenticeship working on homes and small businesses, with one day a week at college. Leads to a Level 3 qualification.',
-    requirements: ['GCSE (or equivalent) English and maths, or willing to work towards them', 'Keen to learn a trade'],
+    requirements: ['GCSE (General Certificate of Secondary Education) English and maths or equivalent, or willing to work towards them', 'Keen to learn a trade'],
   },
   {
     id: 'receptionist',
@@ -165,7 +165,7 @@ export const SAMPLE_JOBS = [
     noExperience: false,
     training: true,
     description:
-      'Greet patients, answer the phones and manage appointment bookings at a busy GP surgery.',
+      'Greet patients, answer the phones and manage appointment bookings at a busy GP (doctor’s) surgery.',
     requirements: ['Customer service experience', 'Calm under pressure'],
   },
   {
