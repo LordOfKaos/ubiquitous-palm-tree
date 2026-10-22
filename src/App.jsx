@@ -51,16 +51,19 @@ export default function App() {
       <a className="skip-link" href="#main" onClick={skipToMain}>
         Skip to main content
       </a>
-      <nav className="tabs no-print" aria-label="Main">
-        {SCREENS.map((s) => (
-          <a key={s.id} href={`#${s.id}`} aria-current={screen === s.id ? 'page' : undefined}>
-            <span aria-hidden="true">{s.icon}</span> {s.label}
-          </a>
-        ))}
-        <button className="theme" onClick={() => setDark(!dark)} aria-label="Dark mode" aria-pressed={dark}>
-          <span aria-hidden="true">{dark ? '☀️' : '🌙'}</span>
-        </button>
-      </nav>
+      <div className="topbar no-print">
+        <nav className="tabs" aria-label="Main">
+          <span className="brand-name">Employability Hub</span>
+          {SCREENS.map((s) => (
+            <a key={s.id} href={`#${s.id}`} aria-current={screen === s.id ? 'page' : undefined}>
+              <span aria-hidden="true">{s.icon}</span> {s.label}
+            </a>
+          ))}
+          <button className="theme" onClick={() => setDark(!dark)} aria-label="Dark mode" aria-pressed={dark}>
+            <span aria-hidden="true">{dark ? '☀️' : '🌙'}</span>
+          </button>
+        </nav>
+      </div>
 
       {screen === 'home' && <HomeScreen />}
       {screen === 'star' && <StarScreen />}

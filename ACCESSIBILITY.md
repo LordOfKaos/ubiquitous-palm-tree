@@ -24,7 +24,7 @@ dark mode.
 
 | Criterion | How it's met |
 | --- | --- |
-| 1.4.6 Contrast (Enhanced) | All text is at least 7:1 against its background in light and dark mode, including tinted backgrounds. |
+| 1.4.6 Contrast (Enhanced) | All text is at least 7:1 against its background in light and dark mode, including tinted backgrounds. With the Serco palette, text uses Dark Purple (18:1 on white) or its 80% tint (10:1); in dark mode, white (18:1) or the 20% tint (11.6:1) on Dark Purple. |
 | 1.4.8 Visual Presentation | 1.5 line spacing, intro text under 80 characters wide, no justified text, a dark mode, works at 200% zoom. |
 | 2.1.3 Keyboard (No Exception) | Everything works from the keyboard. Chart points can be focused; Enter shows the score, Escape hides it. |
 | 2.3.3 Animation from Interactions | Animations are switched off when the device's "reduce motion" setting is on. |

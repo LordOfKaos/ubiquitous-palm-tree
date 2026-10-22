@@ -3,69 +3,100 @@
 /* Never let anything widen the page sideways on phones. */
 html, body { overflow-x: clip; }
 
+/* Serco brand typefaces: Lora for main headings, Avenir Next LT Pro for everything else.
+   Avenir Next is a licensed font, so Nunito Sans (a close free match) stands in for it on
+   devices that don't have it installed. */
 body {
   margin: 0;
   line-height: 1.5;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Nunito Sans', system-ui, sans-serif;
 }
+h1 { font-family: Lora, Georgia, serif; font-weight: 600; }
+/* Form controls don't inherit the page font by default. */
+button, input, select { font-family: inherit; }
 
+/* Serco Dark Purple (#1D0743) and its official tints at 20% steps, plus a 5% tint for the
+   page background. Text colours meet 7:1 contrast (WCAG AAA) on every background they're
+   used on; lighter tints are only used for fills and borders. */
 .app {
-  --bg: #f5f7fb;
+  --serco-purple: #1d0743;
+  --serco-purple-80: #4a3969;
+  --serco-purple-60: #776a8e;
+  --serco-purple-20: #d2cdd9;
+
+  --bg: #f4f3f6;
   --card: #ffffff;
-  --text: #1f2937;
-  /* Text colours meet 7:1 contrast (WCAG AAA) on every background they're used on. */
-  --muted: #414a57;
-  --accent: #05506d;
+  --text: var(--serco-purple);
+  --muted: var(--serco-purple-80);
+  --accent: var(--serco-purple);
   /* Text on accent-filled buttons and badges. */
   --on-accent: #ffffff;
-  --border: #e5e7eb;
-  --grid: #d1d5db;
-  --series-now: #087ea4;
+  --border: var(--serco-purple-20);
+  --grid: var(--serco-purple-20);
+  --series-now: var(--serco-purple);
   --series-start: #d9730d;
   --danger: #9b1c1c;
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  padding: 2rem 1rem;
+  padding: 0 1rem 2rem;
   transition: background 0.2s, color 0.2s;
 }
 
+/* Dark mode keeps to brand colours: Dark Purple surfaces, with cards marked out by a
+   60% tint border rather than a different fill. */
 .app.dark {
-  --bg: #111827;
-  --card: #1f2937;
-  --text: #f3f4f6;
-  --muted: #c0c7d2;
-  --accent: #7dd3e8;
-  --on-accent: #111827;
-  --border: #374151;
-  --grid: #4b5563;
-  --series-now: #2a9fc4;
+  --bg: var(--serco-purple);
+  --card: var(--serco-purple);
+  --text: #ffffff;
+  --muted: var(--serco-purple-20);
+  --accent: var(--serco-purple-20);
+  --on-accent: var(--serco-purple);
+  --border: var(--serco-purple-60);
+  --grid: var(--serco-purple-60);
+  --series-now: var(--serco-purple-20);
   --series-start: #d9730d;
-  --danger: #fca5a5;
+  --danger: #fecaca;
 }
 
+/* Full-width Dark Purple bar in both light and dark mode. */
+.topbar {
+  margin: 0 -1rem 2rem;
+  padding: 0 1rem;
+  background: var(--serco-purple);
+  color: #ffffff;
+}
+.app.dark .topbar { border-bottom: 1px solid var(--border); }
+.topbar :focus-visible { outline-color: #ffffff; }
 .tabs {
   max-width: 1080px;
-  margin: -1rem auto 1.5rem;
+  margin: 0 auto;
   display: flex;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  gap: 0 0.25rem;
   align-items: center;
-  border-bottom: 1px solid var(--border);
+}
+.brand-name {
+  margin-right: 1rem;
+  font-family: Lora, Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 .tabs a {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  min-height: 44px;
+  min-height: 56px;
   padding: 0.5rem 1rem;
-  color: var(--muted);
+  color: var(--serco-purple-20);
   text-decoration: none;
   font-weight: 600;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -1px;
+  border-bottom: 4px solid transparent;
 }
-.tabs a[aria-current='page'] { color: var(--text); border-bottom-color: var(--accent); }
-.tabs .theme { margin-left: auto; background: transparent; font-size: 1.1rem; min-width: 44px; padding: 0.4rem 0.6rem; }
+.tabs a:hover { color: #ffffff; }
+.tabs a[aria-current='page'] { color: #ffffff; border-bottom-color: #ffffff; }
+.tabs .theme { margin-left: auto; background: transparent; color: #ffffff; font-size: 1.1rem; min-width: 44px; padding: 0.4rem 0.6rem; }
 
 header { text-align: center; }
 h1:focus, main:focus { outline: none; }
@@ -262,8 +293,9 @@ button:hover { opacity: 0.85; }
 .filters input, .filters select { min-height: 44px; background: var(--card); }
 
 .notice {
-  background: color-mix(in srgb, var(--series-start) 12%, var(--card));
-  border: 1px solid color-mix(in srgb, var(--series-start) 45%, var(--card));
+  background: color-mix(in srgb, var(--accent) 9%, var(--card));
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
@@ -407,7 +439,11 @@ button:hover { opacity: 0.85; }
 .tile .muted { font-size: 0.85rem; }
 
 @media (max-width: 520px) {
-  .tabs a { padding: 0.75rem 0.6rem; font-size: 0.95rem; }
+  /* Name and theme button share the first line; the tabs sit on their own line below. */
+  .brand-name { flex-basis: calc(100% - 60px); margin-right: 0; }
+  .tabs .theme { order: 1; }
+  .tabs a { order: 2; }
+  .tabs a { min-height: 48px; padding: 0.5rem 0.6rem; font-size: 0.95rem; }
   .participant, .summary { grid-template-columns: 1fr; }
 }
 
@@ -418,6 +454,6 @@ button:hover { opacity: 0.85; }
 
 @media print {
   .no-print { display: none; }
-  .app { padding: 0; background: #fff; }
+  .app { padding: 0; background: #fff; color: #1d0743; }
   .card { box-shadow: none; break-inside: avoid; }
 }
