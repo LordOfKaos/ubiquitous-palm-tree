@@ -14,6 +14,8 @@ body {
   --text: #1f2937;
   --muted: #6b7280;
   --accent: #087ea4;
+  /* Text on accent-filled buttons and badges. */
+  --on-accent: #ffffff;
   --border: #e5e7eb;
   --grid: #d1d5db;
   --series-now: #087ea4;
@@ -31,6 +33,7 @@ body {
   --text: #f3f4f6;
   --muted: #9ca3af;
   --accent: #58c4dc;
+  --on-accent: #111827;
   --border: #374151;
   --grid: #4b5563;
   --series-now: #2a9fc4;
@@ -83,14 +86,13 @@ header p { color: var(--muted); margin: 0 0 1rem; }
 
 button {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
   border-radius: 8px;
   padding: 0.5rem 0.9rem;
   font-size: 0.95rem;
   cursor: pointer;
 }
-.dark button { color: #111827; }
 button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
 button:hover { opacity: 0.85; }
 
@@ -260,8 +262,7 @@ button:hover { opacity: 0.85; }
 .job-details ul { margin: 0.25rem 0 0.75rem; padding-left: 1.25rem; }
 .job > .secondary { align-self: flex-start; }
 .save { flex-shrink: 0; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-.save.saved { background: var(--accent); color: #fff; }
-.dark .save.saved { color: #111827; }
+.save.saved { background: var(--accent); color: var(--on-accent); }
 
 /* Home screen */
 .home { max-width: 1080px; margin: 2rem auto 0; display: flex; flex-direction: column; gap: 1rem; }
@@ -277,7 +278,6 @@ button:hover { opacity: 0.85; }
 
 .section-head { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
 .link-button { background: none; color: var(--accent); padding: 0.25rem 0; font-size: 0.9rem; }
-.dark .link-button { color: var(--accent); }
 
 .next-meeting { border-left: 4px solid var(--accent); }
 .eyebrow { color: var(--accent); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -286,14 +286,13 @@ button:hover { opacity: 0.85; }
 
 .badge {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-radius: 999px;
   font-size: 0.8rem;
   min-width: 1.4rem;
   padding: 0.1rem 0.45rem;
   text-align: center;
 }
-.dark .badge { color: #111827; }
 
 .messages, .actions, .meetings { list-style: none; padding: 0; margin: 0; }
 .message {
