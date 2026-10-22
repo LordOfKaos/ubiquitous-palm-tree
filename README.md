@@ -20,3 +20,9 @@ npm run dev      # start dev server at http://localhost:5173
 npm run build    # production build into dist/
 npm run preview  # serve the production build
 ```
+
+## Deployment
+
+Pushes to `main` deploy the site to GitHub Pages via `.github/workflows/deploy.yml`.
+One-time setup: in the repo's **Settings → Pages**, set **Source** to **GitHub Actions**.
+The site is then served at https://lordofkaos.github.io/ubiquitous-palm-tree/.
