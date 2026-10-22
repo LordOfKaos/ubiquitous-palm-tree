@@ -1,16 +1,21 @@
 # ubiquitous-palm-tree
 
-A simple website demonstrating core React concepts, built with React + Vite.
+A React + Vite app for participants on an employability programme. The participant
+scores themselves from 1 to 10 on five questions, and the answers are plotted live on a
+spider (radar) diagram, their "employability star".
 
-## Demos
+## Questions
 
-| Card | Concept |
-| --- | --- |
-| Counter | `useState` |
-| Todo list | Controlled inputs, rendering lists with `.map()` and `key` |
-| Clock | `useEffect` with interval cleanup |
-| Profile cards | Props and reusable components |
-| Dark mode toggle | Lifting state to a parent / conditional class names |
+1. **Confidence**: How confident do you feel about getting into work?
+2. **Communication**: How comfortable are you talking to new people, such as employers or colleagues?
+3. **CV & Applications**: How ready is your CV, and how confident are you filling in job applications?
+4. **Interview Skills**: How prepared do you feel for a job interview?
+5. **Work Readiness**: How ready are you for a working routine (timekeeping, travel, childcare and so on)?
+
+Edit `src/questions.js` to change the wording or the questions; the chart adapts to the list.
+
+The page also shows the average score, strongest area and area to focus on, and can be
+printed or saved as a PDF.
 
 ## Running locally
 
