@@ -17,6 +17,13 @@ Edit `src/questions.js` to change the wording or the questions; the chart adapts
 The page also shows the average score, strongest area and area to focus on, and can be
 printed or saved as a PDF.
 
+### Distance travelled
+
+Press **Save as starting point** to keep today's scores. At later check-ins the starting
+point is drawn as a dashed orange outline behind the current scores, and a table shows the
+change in each area. Scores and the starting point are saved in the browser on that device
+only (`localStorage`); nothing is sent to a server.
+
 ## Running locally
 
 ```bash

@@ -1,5 +1,8 @@
 * { box-sizing: border-box; }
 
+/* Never let anything widen the page sideways on phones. */
+html, body { overflow-x: clip; }
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -13,6 +16,8 @@ body {
   --accent: #087ea4;
   --border: #e5e7eb;
   --grid: #d1d5db;
+  --series-now: #087ea4;
+  --series-start: #d9730d;
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
@@ -28,6 +33,8 @@ body {
   --accent: #58c4dc;
   --border: #374151;
   --grid: #4b5563;
+  --series-now: #2a9fc4;
+  --series-start: #d9730d;
 }
 
 header { text-align: center; }
@@ -38,12 +45,13 @@ header p { color: var(--muted); margin: 0 0 1rem; }
   max-width: 1080px;
   margin: 2rem auto 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 1.25rem;
   align-items: start;
 }
 
 .card {
+  min-width: 0;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -64,9 +72,11 @@ button {
   cursor: pointer;
 }
 .dark button { color: #111827; }
+button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
 button:hover { opacity: 0.85; }
 
 .row { display: flex; gap: 0.5rem; }
+.wrap { flex-wrap: wrap; }
 .center { justify-content: center; }
 .muted { color: var(--muted); font-size: 0.9rem; }
 
@@ -79,12 +89,16 @@ button:hover { opacity: 0.85; }
 }
 .participant label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; font-weight: 600; }
 .participant input {
+  width: 100%;
+  min-width: 0;
   padding: 0.5rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg);
   color: var(--text);
   font: inherit;
+  /* 16px stops iPhone Safari zooming in (and the page shifting) when the field is tapped. */
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -102,19 +116,26 @@ button:hover { opacity: 0.85; }
   font-variant-numeric: tabular-nums;
 }
 
-.spider { width: 100%; max-width: 500px; display: block; margin: 0.5rem auto; overflow: visible; }
+.spider { width: 100%; max-width: 520px; display: block; margin: 0.5rem auto; overflow: hidden; }
 .spider .grid { fill: none; stroke: var(--grid); stroke-width: 1; }
 .spider .tick { fill: var(--muted); font-size: 12px; }
 .spider .axis-label { fill: var(--text); font-size: 16px; font-weight: 600; }
 .spider .area {
-  fill: var(--accent);
+  fill: var(--series-now);
   fill-opacity: 0.2;
-  stroke: var(--accent);
+  stroke: var(--series-now);
   stroke-width: 2;
   stroke-linejoin: round;
   transition: all 0.2s;
 }
-.spider .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2; transition: all 0.2s; }
+.spider .baseline {
+  fill: none;
+  stroke: var(--series-start);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+  stroke-linejoin: round;
+}
+.spider .dot { fill: var(--series-now); stroke: var(--card); stroke-width: 2; transition: all 0.2s; }
 .spider .hit { fill: transparent; cursor: pointer; }
 .spider .tooltip rect { fill: var(--text); }
 .spider .tooltip text { fill: var(--card); font-size: 13px; font-weight: 600; }
@@ -129,6 +150,34 @@ button:hover { opacity: 0.85; }
 .summary div { background: var(--bg); border-radius: 8px; padding: 0.75rem; }
 .summary dt { color: var(--muted); font-size: 0.8rem; }
 .summary dd { margin: 0.25rem 0 0; font-weight: 700; }
+
+.legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+.legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.swatch { display: inline-block; width: 22px; height: 0; border-top: 3px solid; }
+.swatch.now { border-color: var(--series-now); }
+.swatch.start { border-color: var(--series-start); border-top-style: dashed; }
+
+.hint { margin: 0.75rem 0 0; }
+
+.progress {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+.progress caption { text-align: left; font-weight: 700; margin-bottom: 0.5rem; }
+.progress th, .progress td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); text-align: right; }
+.progress th:first-child, .progress td:first-child { text-align: left; }
+.progress th { color: var(--muted); font-weight: 600; font-size: 0.8rem; }
+.progress tfoot td { font-weight: 700; border-bottom: none; }
 
 @media (max-width: 520px) {
   .participant, .summary { grid-template-columns: 1fr; }

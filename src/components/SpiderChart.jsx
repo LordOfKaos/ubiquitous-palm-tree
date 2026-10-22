@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MAX_SCORE } from '../questions.js';
 
-const WIDTH = 500;
+const WIDTH = 520;
 const HEIGHT = 390;
 const CX = WIDTH / 2;
 const CY = HEIGHT / 2 + 5;
@@ -19,16 +19,23 @@ function polygon(count, valueAt) {
   return Array.from({ length: count }, (_, i) => point(i, count, valueAt(i)).join(',')).join(' ');
 }
 
-export default function SpiderChart({ questions, scores }) {
-  const [hovered, setHovered] = useState(null);
+export default function SpiderChart({ questions, scores, baseline }) {
+  const [active, setActive] = useState(null);
   const n = questions.length;
+
+  function describe(q) {
+    return baseline
+      ? `${q.label}: ${baseline[q.id]} → ${scores[q.id]}`
+      : `${q.label}: ${scores[q.id]}/10`;
+  }
 
   return (
     <svg
       className="spider"
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       role="img"
-      aria-label={questions.map((q) => `${q.label}: ${scores[q.id]} out of 10`).join(', ')}
+      aria-label={questions.map(describe).join(', ')}
+      onMouseLeave={() => setActive(null)}
     >
       {RINGS.map((ring) => (
         <polygon key={ring} className="grid" points={polygon(n, () => ring)} />
@@ -68,29 +75,35 @@ export default function SpiderChart({ questions, scores }) {
 
       <polygon className="area" points={polygon(n, (i) => scores[questions[i].id])} />
 
+      {baseline && (
+        <polygon className="baseline" points={polygon(n, (i) => baseline[questions[i].id])} />
+      )}
+
       {questions.map((q, i) => {
         const [x, y] = point(i, n, scores[q.id]);
         return (
           <g
             key={q.id}
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
+            onMouseEnter={() => setActive(i)}
+            onClick={() => setActive(active === i ? null : i)}
           >
-            <circle className="hit" cx={x} cy={y} r="14" />
-            <circle className="dot" cx={x} cy={y} r={hovered === i ? 6 : 4.5} />
+            <circle className="hit" cx={x} cy={y} r="16" />
+            <circle className="dot" cx={x} cy={y} r={active === i ? 6 : 4.5} />
           </g>
         );
       })}
 
-      {hovered !== null && (() => {
-        const q = questions[hovered];
-        const [x, y] = point(hovered, n, scores[q.id]);
-        const text = `${q.label}: ${scores[q.id]}/10`;
+      {active !== null && (() => {
+        const q = questions[active];
+        const [x, y] = point(active, n, scores[q.id]);
+        const text = describe(q);
         const w = text.length * 7.5 + 16;
+        // Keep the tooltip inside the chart so it can't push the page wider.
+        const left = Math.min(Math.max(x - w / 2, 0), WIDTH - w);
         return (
           <g className="tooltip" pointerEvents="none">
-            <rect x={x - w / 2} y={y - 38} width={w} height="24" rx="6" />
-            <text x={x} y={y - 26} textAnchor="middle" dominantBaseline="middle">
+            <rect x={left} y={y - 38} width={w} height="24" rx="6" />
+            <text x={left + w / 2} y={y - 26} textAnchor="middle" dominantBaseline="middle">
               {text}
             </text>
           </g>
