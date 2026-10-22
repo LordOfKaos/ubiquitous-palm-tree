@@ -24,6 +24,18 @@ point is drawn as a dashed orange outline behind the current scores, and a table
 change in each area. Scores and the starting point are saved in the browser on that device
 only (`localStorage`); nothing is sent to a server.
 
+## Jobs screen
+
+The **Jobs** tab lists vacancies near the participant. They can change the town or postcode
+and the distance, search by keyword, filter by hours or "No experience needed", sort by
+newest or nearest, and save jobs to a shortlist to discuss with their adviser. The area and
+saved jobs are remembered on the device.
+
+The adverts are currently **sample data** (`src/jobs/sampleJobs.js`) with fictional
+employers, and the screen says so. All adverts come through `fetchJobs()` in
+`src/jobs/jobSource.js`; to show real vacancies, replace that function with a call to a
+job-search API that returns the same shape. The default area is set in `src/jobs/config.js`.
+
 ## Running locally
 
 ```bash
