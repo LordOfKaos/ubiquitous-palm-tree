@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { DEFAULT_AREA, DEFAULT_RADIUS_MILES, RADIUS_OPTIONS } from '../jobs/config.js';
 import { fetchJobs } from '../jobs/jobSource.js';
-import { loadSaved, save } from '../storage.js';
+import { KEYS, loadSaved, save } from '../storage.js';
 import JobCard from '../components/JobCard.jsx';
 
-const STORAGE_KEY = 'employability-jobs';
-const saved = loadSaved(STORAGE_KEY);
-
 export default function JobsScreen() {
+  // Read saved data each time the screen opens, so switching tabs never shows stale data.
+  const [saved] = useState(() => loadSaved(KEYS.jobs));
   const [area, setArea] = useState(saved.area ?? DEFAULT_AREA);
   const [areaInput, setAreaInput] = useState(area);
   const [radius, setRadius] = useState(saved.radius ?? DEFAULT_RADIUS_MILES);
@@ -24,7 +23,7 @@ export default function JobsScreen() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    save(STORAGE_KEY, { area, radius, shortlist });
+    save(KEYS.jobs, { area, radius, shortlist });
   }, [area, radius, shortlist]);
 
   useEffect(() => {

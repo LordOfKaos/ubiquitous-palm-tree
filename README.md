@@ -24,6 +24,26 @@ point is drawn as a dashed orange outline behind the current scores, and a table
 change in each area. Scores and the starting point are saved in the browser on that device
 only (`localStorage`); nothing is sent to a server.
 
+## Home screen
+
+Participants land on **Home**, which brings together:
+
+- **Your next meeting**: when, where and what to bring, with an **Add to my calendar** button
+  that downloads a calendar file.
+- **Messages from your job coach**: nudges, reminders and encouragement, with unread badges
+  and links straight to the relevant screen.
+- **My actions**: the participant's action plan, ticked off as they go, with a progress bar and
+  overdue actions highlighted.
+- **Coming up**: later meetings and sessions.
+- **My progress**: their latest Employability Star score (and change since their starting point)
+  and how many jobs they've saved.
+
+The coach's messages, meetings and actions are currently **sample data**
+(`src/home/sampleCoachData.js`), with dates set relative to today so the demo always looks
+current. They all come through `fetchCoachUpdates()` in `src/home/coachSource.js`, ready to be
+connected to a real case-management system. Which messages have been read and which actions
+are done is remembered on the device.
+
 ## Jobs screen
 
 The **Jobs** tab lists vacancies near the participant. They can change the town or postcode
