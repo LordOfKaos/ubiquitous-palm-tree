@@ -1,17 +1,15 @@
-const KEY = 'employability-star';
-
-// Saved on this device only, so a returning participant sees their starting point.
-export function loadSaved() {
+// Saved on this device only, so a returning participant picks up where they left off.
+export function loadSaved(key) {
   try {
-    return JSON.parse(localStorage.getItem(KEY)) || {};
+    return JSON.parse(localStorage.getItem(key)) || {};
   } catch {
     return {};
   }
 }
 
-export function save(state) {
+export function save(key, state) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     // Storage can be unavailable (e.g. private browsing); the app still works without it.
   }
